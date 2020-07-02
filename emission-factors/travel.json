@@ -1,0 +1,42 @@
+[
+  {
+    "type": "Passenger Car",
+    "CO2": 0.335
+  },
+  {
+    "type": "Light-Duty Truck",
+    "CO2": 0.461
+  },
+  {
+    "type": "Motorcycle",
+    "CO2": 0.184
+  },
+  {
+    "type": "Intercity Rail - Amtrak",
+    "CO2": 0.113
+  },
+  {
+    "type": "Commuter Rail",
+    "CO2": 0.148
+  },
+  {
+    "type": "Transit Rail (i.e. Subway, Tram)",
+    "CO2": 0.099
+  },
+  {
+    "type": "Bus",
+    "CO2": 0.053
+  },
+  {
+    "type": "Air Travel - Short Haul (< 300 miles)",
+    "CO2": 0.215
+  },
+  {
+    "type": "Air Travel - Medium Haul (>= 300 miles, < 2300 miles)",
+    "CO2": 0.133
+  },
+  {
+    "type": "Air Travel - Long Haul (>= 2300 miles)",
+    "CO2": 0.165
+  }
+]
