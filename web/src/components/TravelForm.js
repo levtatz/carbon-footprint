@@ -31,11 +31,13 @@ const tailLayout = {
   },
 };
 
-export const TravelForm = () => {
+export const TravelForm = ({ setEmissions }) => {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    const query = new URLSearchParams(values);
+    const response = await fetch(`/api/travel?${query}`);
+    setEmissions(await response.json());
   };
 
   return (
@@ -51,7 +53,9 @@ export const TravelForm = () => {
       >
         <Select placeholder="Select a vehicle type" allowClear>
           {vehicleTypes.map((vehicleType) => (
-            <Option value={vehicleType}>{vehicleType}</Option>
+            <Option key={vehicleType} value={vehicleType}>
+              {vehicleType}
+            </Option>
           ))}
         </Select>
       </Form.Item>

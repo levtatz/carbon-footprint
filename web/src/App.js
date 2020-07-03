@@ -1,11 +1,13 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Menu, Row, Col, Statistic } from 'antd';
 import { TravelForm } from './components/TravelForm';
 
 import 'antd/dist/antd.css';
 import './App.css';
 
 function App() {
+  const [emissions, setEmissions] = useState(0);
+
   const { Header, Content } = Layout;
   return (
     <Layout className="layout">
@@ -18,7 +20,18 @@ function App() {
       </Header>
       <Content style={{ padding: '50px' }}>
         <div className="site-layout-content">
-          <TravelForm />
+          <Row gutter={16}>
+            <Col span={12}>
+              <TravelForm setEmissions={setEmissions} />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Carbon Dioxide Emissions (lbs)"
+                value={emissions.emissions}
+                precision={2}
+              />
+            </Col>
+          </Row>
         </div>
       </Content>
     </Layout>
