@@ -90,6 +90,18 @@ export const DrivingForm = ({ setEmissions }) => {
       </Form.Item>
 
       <Form.Item
+        name="mpg"
+        label="Miles per gallon"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+
+      <Form.Item
         name="miles"
         label="Miles"
         rules={[

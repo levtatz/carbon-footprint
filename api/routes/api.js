@@ -6,6 +6,8 @@ const { query, validationResult } = require('express-validator');
 const travelEmissionFactors = require('../emission-factors/travel.json');
 const carEmissionsFactors = require('../emission-factors/cars.json');
 
+const kgCO2perGallon = 8.78;
+
 const kgToLbsFactor = 2.205;
 const gToLbsFactor = 1 / 454;
 
@@ -41,6 +43,7 @@ router.get(
 router.get(
   '/driving',
   [
+    query('mpg').isInt().withMessage('mpg must be present'),
     query('year')
       .isInt({ min: 1973, max: 2018 })
       .withMessage('year must be between 1973 and 2018'),
@@ -56,6 +59,7 @@ router.get(
     }
 
     const miles = req.query.miles;
+    const mpg = req.query.mpg;
     const year = Number(req.query.year);
 
     const emissionsIndex = carEmissionsFactors.years.indexOf(year);
@@ -63,7 +67,10 @@ router.get(
     const CH4 = carEmissionsFactors.CH4[emissionsIndex];
     const N2O = carEmissionsFactors.N2O[emissionsIndex];
 
-    res.json({ emissions: (CH4 + N2O) * gToLbsFactor * miles });
+    const carbonEmissions = kgCO2perGallon * mpg * kgToLbsFactor * miles;
+    const otherEmissions = (CH4 + N2O) * gToLbsFactor * miles;
+
+    res.json({ emissions: carbonEmissions + otherEmissions });
   }
 );
 
