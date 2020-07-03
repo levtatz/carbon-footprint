@@ -43,7 +43,7 @@ function App() {
                 precision={2}
                 style={{ margin: '3em auto' }}
               />
-              {emissions & (tabKey === 2) ? (
+              {emissions && tabKey === '2' ? (
                 <Card
                   title="Neutralize Your Drive                "
                   extra={
