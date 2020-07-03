@@ -1,36 +1,48 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Row, Card, Col, Statistic } from 'antd';
+import { Layout, Tabs, Row, Card, Col, Statistic } from 'antd';
 import { TravelForm } from './components/TravelForm';
 
 import 'antd/dist/antd.css';
 import './App.css';
 
+const { TabPane } = Tabs;
+
 function App() {
   const [emissions, setEmissions] = useState(0);
+  const [tabKey, setTabKey] = useState(1);
+
+  const onTabChange = (tabKey) => {
+    setTabKey(tabKey);
+    setEmissions(0);
+  };
 
   const { Header, Content } = Layout;
   return (
     <Layout className="layout">
       <Header>
-        <Menu mode="horizontal" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">💼</Menu.Item>
-          <Menu.Item key="2">🚗</Menu.Item>
-          <Menu.Item key="3">🏠</Menu.Item>
-        </Menu>
+        <h1>Carbon Emissions Calculator</h1>
       </Header>
       <Content style={{ padding: '50px' }}>
         <div className="site-layout-content">
-          <Row gutter={16}>
+          <Row gutter={32}>
             <Col span={12}>
-              <TravelForm setEmissions={setEmissions} />
+              <Tabs defaultActiveKey={tabKey} onChange={onTabChange}>
+                <TabPane tab="Commuting" key="1">
+                  <TravelForm setEmissions={setEmissions} />
+                </TabPane>
+                <TabPane tab="Driving" key="2">
+                  Content of Tab Pane 2
+                </TabPane>
+              </Tabs>
             </Col>
             <Col span={12}>
               <Statistic
                 title="Carbon Dioxide Emissions (lbs)"
                 value={emissions.emissions}
                 precision={2}
+                style={{ margin: '3em auto' }}
               />
-              {emissions ? (
+              {emissions & (tabKey == 2) ? (
                 <Card
                   title="Neutralize Your Drive                "
                   extra={
@@ -38,7 +50,7 @@ function App() {
                       More
                     </a>
                   }
-                  style={{ maxWidth: 333, marginTop: '2em' }}
+                  style={{ maxWidth: 333 }}
                 >
                   <p>
                     <a href="https://www.aspiration.com/" target="_blank">
