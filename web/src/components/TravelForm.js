@@ -36,7 +36,7 @@ export const TravelForm = ({ setEmissions }) => {
 
   const onFinish = async (values) => {
     const query = new URLSearchParams(values);
-    const response = await fetch(`/api/travel?${query}`);
+    const response = await fetch(`/api/commuting?${query}`);
     setEmissions(await response.json());
   };
 

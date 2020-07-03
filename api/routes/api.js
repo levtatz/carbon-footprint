@@ -9,7 +9,7 @@ const kgToLbsFactor = 2.205;
 // TODO: add tests
 /* GET travel emissions. */
 router.get(
-  '/',
+  '/commuting',
   [
     query('type').not().isEmpty().withMessage('type must be present'),
     query('miles')
