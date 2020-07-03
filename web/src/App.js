@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Row, Col, Statistic } from 'antd';
+import { Layout, Menu, Row, Card, Col, Statistic } from 'antd';
 import { TravelForm } from './components/TravelForm';
 
 import 'antd/dist/antd.css';
@@ -30,6 +30,26 @@ function App() {
                 value={emissions.emissions}
                 precision={2}
               />
+              {emissions ? (
+                <Card
+                  title="Neutralize Your Drive                "
+                  extra={
+                    <a href="https://www.aspiration.com/" target="_blank">
+                      More
+                    </a>
+                  }
+                  style={{ maxWidth: 333, marginTop: '2em' }}
+                >
+                  <p>
+                    <a href="https://www.aspiration.com/" target="_blank">
+                      Aspiration’s
+                    </a>{' '}
+                    Planet Protection™ feature tallies up the carbon output of
+                    all of your gas purchases, then automatically buys offsets
+                    to help counter the climate impact.
+                  </p>
+                </Card>
+              ) : null}
             </Col>
           </Row>
         </div>
