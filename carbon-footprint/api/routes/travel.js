@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 const travelEmissionFactors = require('../emission-factors/travel.json');
 const kgToLbsFactor = 2.205;
 
+// TODO: add tests
 /* GET travel emissions. */
 router.get(
   '/',
