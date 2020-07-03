@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Tabs, Row, Card, Col, Statistic } from 'antd';
 import { TravelForm } from './components/TravelForm';
+import { DrivingForm } from './components/DrivingForm';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -31,7 +32,7 @@ function App() {
                   <TravelForm setEmissions={setEmissions} />
                 </TabPane>
                 <TabPane tab="Driving" key="2">
-                  Content of Tab Pane 2
+                  <DrivingForm setEmissions={setEmissions} />
                 </TabPane>
               </Tabs>
             </Col>
@@ -42,7 +43,7 @@ function App() {
                 precision={2}
                 style={{ margin: '3em auto' }}
               />
-              {emissions & (tabKey == 2) ? (
+              {emissions & (tabKey === 2) ? (
                 <Card
                   title="Neutralize Your Drive                "
                   extra={
