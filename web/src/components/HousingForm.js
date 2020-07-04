@@ -20,7 +20,7 @@ const tailLayout = {
   },
 };
 
-export const HousingForm = ({ setEmissions }) => {
+export const HousingForm = ({ addToChart, setEmissions }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
@@ -71,6 +71,11 @@ export const HousingForm = ({ setEmissions }) => {
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Calculate Carbon Footprint
+        </Button>
+        <Button
+          onClick={() => addToChart('House ' + form.getFieldValue('state'))}
+        >
+          Chart & Compare
         </Button>
       </Form.Item>
     </Form>

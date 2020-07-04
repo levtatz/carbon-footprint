@@ -4,6 +4,7 @@ import { Layout, Tabs, Row, Card, Col, Statistic } from 'antd';
 import { DrivingForm } from './components/DrivingForm';
 import { HousingForm } from './components/HousingForm';
 import { TravelForm } from './components/TravelForm';
+import { Chart } from './components/chart';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -13,10 +14,15 @@ const { TabPane } = Tabs;
 function App() {
   const [emissions, setEmissions] = useState(0);
   const [tabKey, setTabKey] = useState(1);
+  const [chartData, setChartData] = useState([]);
 
   const onTabChange = (tabKey) => {
     setTabKey(tabKey);
     setEmissions(0);
+  };
+
+  const addToChart = (category) => {
+    setChartData([...chartData, { category, ...emissions }]);
   };
 
   const { Header, Content } = Layout;
@@ -31,13 +37,22 @@ function App() {
             <Col span={12}>
               <Tabs defaultActiveKey={tabKey} onChange={onTabChange}>
                 <TabPane tab="Housing" key="1">
-                  <HousingForm setEmissions={setEmissions} />
+                  <HousingForm
+                    addToChart={addToChart}
+                    setEmissions={setEmissions}
+                  />
                 </TabPane>
                 <TabPane tab="Commuting" key="2">
-                  <TravelForm setEmissions={setEmissions} />
+                  <TravelForm
+                    addToChart={addToChart}
+                    setEmissions={setEmissions}
+                  />
                 </TabPane>
                 <TabPane tab="Driving" key="3">
-                  <DrivingForm setEmissions={setEmissions} />
+                  <DrivingForm
+                    addToChart={addToChart}
+                    setEmissions={setEmissions}
+                  />
                 </TabPane>
               </Tabs>
             </Col>
@@ -70,6 +85,7 @@ function App() {
               ) : null}
             </Col>
           </Row>
+          <Chart data={chartData} />
         </div>
       </Content>
     </Layout>
