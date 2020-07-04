@@ -68,7 +68,7 @@ router.get(
     const CH4 = carEmissionsFactors.CH4[emissionsIndex];
     const N2O = carEmissionsFactors.N2O[emissionsIndex];
 
-    const carbonEmissions = kgCO2perGallon * mpg * kgToLbsFactor * miles;
+    const carbonEmissions = (kgCO2perGallon / mpg) * kgToLbsFactor * miles;
     const otherEmissions = (CH4 + N2O) * gToLbsFactor * miles;
 
     res.json({ emissions: carbonEmissions + otherEmissions });
