@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Layout, Tabs, Row, Card, Col, Statistic } from 'antd';
-import { TravelForm } from './components/TravelForm';
+
 import { DrivingForm } from './components/DrivingForm';
+import { HousingForm } from './components/HousingForm';
+import { TravelForm } from './components/TravelForm';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -28,10 +30,13 @@ function App() {
           <Row gutter={32}>
             <Col span={12}>
               <Tabs defaultActiveKey={tabKey} onChange={onTabChange}>
-                <TabPane tab="Commuting" key="1">
+                <TabPane tab="Housing" key="1">
+                  <HousingForm setEmissions={setEmissions} />
+                </TabPane>
+                <TabPane tab="Commuting" key="2">
                   <TravelForm setEmissions={setEmissions} />
                 </TabPane>
-                <TabPane tab="Driving" key="2">
+                <TabPane tab="Driving" key="3">
                   <DrivingForm setEmissions={setEmissions} />
                 </TabPane>
               </Tabs>
@@ -43,7 +48,7 @@ function App() {
                 precision={2}
                 style={{ margin: '3em auto' }}
               />
-              {emissions && tabKey === '2' ? (
+              {emissions && tabKey === '3' ? (
                 <Card
                   title="Neutralize Your Drive                "
                   extra={

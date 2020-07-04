@@ -5,6 +5,7 @@ const { query, validationResult } = require('express-validator');
 
 const travelEmissionFactors = require('../emission-factors/travel.json');
 const carEmissionsFactors = require('../emission-factors/cars.json');
+const stateEmissionRates = require('../emission-factors/states.json');
 
 const kgCO2perGallon = 8.78;
 
@@ -71,6 +72,33 @@ router.get(
     const otherEmissions = (CH4 + N2O) * gToLbsFactor * miles;
 
     res.json({ emissions: carbonEmissions + otherEmissions });
+  }
+);
+
+// TODO: add tests
+/* GET housing emissions. */
+router.get(
+  '/housing',
+  [
+    query('state')
+      .isAlpha()
+      .isLength({ min: 2, max: 2 })
+      .withMessage('state must be an abbreviation'),
+    query('kwhs')
+      .isNumeric({ min: 0 })
+      .withMessage('KWhs must be a positive number'),
+  ],
+  function (req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const state = req.query.state;
+    const kwhs = req.query.kwhs;
+
+    res.json({ emissions: (stateEmissionRates[state] * kwhs) / 1000 });
   }
 );
 

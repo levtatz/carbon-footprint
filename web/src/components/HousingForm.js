@@ -1,48 +1,9 @@
 import React from 'react';
 import { Form, InputNumber, Button, Select } from 'antd';
+import states from '../data/states-abbr.json';
+import stateAvgs from '../data/state-avgs.json';
 
 const { Option } = Select;
-
-const vehicleYears = [
-  1973,
-  1974,
-  1975,
-  1976,
-  1977,
-  1978,
-  1979,
-  1980,
-  1981,
-  1982,
-  1983,
-  1984,
-  1993,
-  1994,
-  1995,
-  1996,
-  1997,
-  1998,
-  1999,
-  2000,
-  2001,
-  2002,
-  2003,
-  2004,
-  2005,
-  2006,
-  2007,
-  2008,
-  2009,
-  2010,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
-];
 
 const layout = {
   labelCol: {
@@ -59,51 +20,45 @@ const tailLayout = {
   },
 };
 
-export const DrivingForm = ({ setEmissions }) => {
+export const HousingForm = ({ setEmissions }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     const query = new URLSearchParams(values);
-    const response = await fetch(`/api/driving?${query}`);
+    const response = await fetch(`/api/housing?${query}`);
     setEmissions(await response.json());
   };
 
+  const prefillKwhs = (value) =>
+    form.setFieldsValue({ kwhs: stateAvgs[value] });
+
   return (
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <h3>Gasoline Passenger Cars</h3>
       <Form.Item
-        name="year"
-        label="Vehicle Year"
+        name="state"
+        label="State"
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Select placeholder="Select a vehicle year" allowClear>
-          {vehicleYears.map((vehicleYear) => (
-            <Option key={vehicleYear} value={vehicleYear}>
-              {vehicleYear}
+        <Select
+          placeholder="Select a your state"
+          onChange={prefillKwhs}
+          allowClear
+        >
+          {states.map((state) => (
+            <Option key={state.abbreviation} value={state.abbreviation}>
+              {state.name}
             </Option>
           ))}
         </Select>
       </Form.Item>
 
       <Form.Item
-        name="mpg"
-        label="Miles per gallon"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-
-      <Form.Item
-        name="miles"
-        label="Miles"
+        name="kwhs"
+        label="KWhs"
         rules={[
           {
             required: true,
