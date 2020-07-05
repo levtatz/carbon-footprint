@@ -59,7 +59,7 @@ export const DrivingForm = ({ addToChart, setEmissions }) => {
           },
         ]}
       >
-        <InputNumber />
+        <InputNumber min={1} />
       </Form.Item>
 
       <Form.Item
@@ -71,7 +71,7 @@ export const DrivingForm = ({ addToChart, setEmissions }) => {
           },
         ]}
       >
-        <InputNumber />
+        <InputNumber min={1} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

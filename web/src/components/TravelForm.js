@@ -69,7 +69,7 @@ export const TravelForm = ({ addToChart, setEmissions }) => {
           },
         ]}
       >
-        <InputNumber />
+        <InputNumber min={1} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

@@ -38,7 +38,7 @@ router.get(
 router.get(
   '/driving',
   [
-    query('mpg').isInt().withMessage('mpg must be present'),
+    query('mpg').isInt({ min: 1 }).withMessage('mpg must be present'),
     query('year')
       .isInt({ min: 1973, max: 2018 })
       .withMessage('year must be between 1973 and 2018'),
