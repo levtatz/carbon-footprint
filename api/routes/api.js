@@ -3,14 +3,7 @@ var router = express.Router();
 
 const { query, validationResult } = require('express-validator');
 
-const travelEmissionFactors = require('../emission-factors/travel.json');
-const carEmissionsFactors = require('../emission-factors/cars.json');
-const stateEmissionRates = require('../emission-factors/states.json');
-
-const kgCO2perGallon = 8.78;
-
-const kgToLbsFactor = 2.205;
-const gToLbsFactor = 1 / 454;
+const emissionsCalculator = require('../emission-factors/emissionsCalculator');
 
 // TODO: add tests
 /* GET commuting emissions. */
@@ -32,10 +25,12 @@ router.get(
     const miles = req.query.miles;
     const type = req.query.type;
 
-    const emissionFactor = travelEmissionFactors.find(
-      (travelEmission) => travelEmission.type == type
-    );
-    res.json({ emissions: emissionFactor.CO2 * kgToLbsFactor * miles });
+    const emissions = emissionsCalculator.getCommutingEmissions({
+      miles,
+      type,
+    });
+
+    res.json({ emissions });
   }
 );
 
@@ -63,15 +58,13 @@ router.get(
     const mpg = req.query.mpg;
     const year = Number(req.query.year);
 
-    const emissionsIndex = carEmissionsFactors.years.indexOf(year);
+    const emissions = emissionsCalculator.getDrivingEmissions({
+      miles,
+      mpg,
+      year,
+    });
 
-    const CH4 = carEmissionsFactors.CH4[emissionsIndex];
-    const N2O = carEmissionsFactors.N2O[emissionsIndex];
-
-    const carbonEmissions = (kgCO2perGallon / mpg) * kgToLbsFactor * miles;
-    const otherEmissions = (CH4 + N2O) * gToLbsFactor * miles;
-
-    res.json({ emissions: carbonEmissions + otherEmissions });
+    res.json({ emissions });
   }
 );
 
@@ -98,7 +91,9 @@ router.get(
     const state = req.query.state;
     const kwhs = req.query.kwhs;
 
-    res.json({ emissions: (stateEmissionRates[state] * kwhs) / 1000 });
+    const emissions = emissionsCalculator.getHousingEmissions({ state, kwhs });
+
+    res.json({ emissions });
   }
 );
 
