@@ -5,6 +5,7 @@ import { DrivingForm } from './components/DrivingForm';
 import { HousingForm } from './components/HousingForm';
 import { TravelForm } from './components/TravelForm';
 import { Chart } from './components/chart';
+import { Promo } from './components/Promo';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -63,26 +64,7 @@ function App() {
                 precision={2}
                 style={{ margin: '3em auto' }}
               />
-              {emissions && tabKey === '3' ? (
-                <Card
-                  title="Neutralize Your Drive                "
-                  extra={
-                    <a href="https://www.aspiration.com/" target="_blank">
-                      More
-                    </a>
-                  }
-                  style={{ maxWidth: 333 }}
-                >
-                  <p>
-                    <a href="https://www.aspiration.com/" target="_blank">
-                      Aspiration’s
-                    </a>{' '}
-                    Planet Protection™ feature tallies up the carbon output of
-                    all of your gas purchases, then automatically buys offsets
-                    to help counter the climate impact.
-                  </p>
-                </Card>
-              ) : null}
+              <Promo emissions={emissions} tabKey={tabKey} />
             </Col>
           </Row>
           <Chart data={chartData} />
