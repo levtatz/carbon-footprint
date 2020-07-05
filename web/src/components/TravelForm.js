@@ -51,7 +51,7 @@ export const TravelForm = ({ addToChart, setEmissions }) => {
           },
         ]}
       >
-        <Select placeholder="Select a vehicle type" allowClear>
+        <Select placeholder="Select a vehicle type" showSearch allowClear>
           {vehicleTypes.map((vehicleType) => (
             <Option key={vehicleType} value={vehicleType}>
               {vehicleType}

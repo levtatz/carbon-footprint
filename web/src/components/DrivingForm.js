@@ -80,7 +80,7 @@ export const DrivingForm = ({ addToChart, setEmissions }) => {
           },
         ]}
       >
-        <Select placeholder="Select a vehicle year" allowClear>
+        <Select placeholder="Select a vehicle year" showSearch allowClear>
           {vehicleYears.map((vehicleYear) => (
             <Option key={vehicleYear} value={vehicleYear}>
               {vehicleYear}

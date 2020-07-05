@@ -44,8 +44,10 @@ export const HousingForm = ({ addToChart, setEmissions }) => {
         ]}
       >
         <Select
+          showSearch
           placeholder="Select a your state"
           onChange={prefillKwhs}
+          optionFilterProp="children"
           allowClear
         >
           {states.map((state) => (
