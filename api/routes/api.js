@@ -5,6 +5,12 @@ const { query, validationResult } = require('express-validator');
 
 const emissionsCalculator = require('../emission-factors/emissionsCalculator');
 
+const hasErrors = function ({ errors, res }) {
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+};
+
 // TODO: add tests
 /* GET commuting emissions. */
 router.get(
@@ -16,18 +22,11 @@ router.get(
       .withMessage('miles must be a positive number'),
   ],
   function (req, res, next) {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-    const miles = req.query.miles;
-    const type = req.query.type;
+    hasErrors({ errors: validationResult(req), res });
 
     const emissions = emissionsCalculator.getCommutingEmissions({
-      miles,
-      type,
+      miles: req.query.miles,
+      type: req.query.type,
     });
 
     res.json({ emissions });
@@ -48,20 +47,12 @@ router.get(
       .withMessage('miles must be a positive number'),
   ],
   function (req, res, next) {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-    const miles = req.query.miles;
-    const mpg = req.query.mpg;
-    const year = Number(req.query.year);
+    hasErrors({ errors: validationResult(req), res });
 
     const emissions = emissionsCalculator.getDrivingEmissions({
-      miles,
-      mpg,
-      year,
+      miles: req.query.miles,
+      mpg: req.query.mpg,
+      year: Number(req.query.year),
     });
 
     res.json({ emissions });
@@ -82,16 +73,12 @@ router.get(
       .withMessage('KWhs must be a positive number'),
   ],
   function (req, res, next) {
-    const errors = validationResult(req);
+    hasErrors({ errors: validationResult(req), res });
 
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-    const state = req.query.state;
-    const kwhs = req.query.kwhs;
-
-    const emissions = emissionsCalculator.getHousingEmissions({ state, kwhs });
+    const emissions = emissionsCalculator.getHousingEmissions({
+      state: req.query.state,
+      kwhs: req.query.kwhs,
+    });
 
     res.json({ emissions });
   }
