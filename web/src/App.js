@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 
 function App() {
   const [emissions, setEmissions] = useState(0);
-  const [tabKey, setTabKey] = useState(1);
+  const [tabKey, setTabKey] = useState('1');
   const [chartData, setChartData] = useState([]);
 
   const onTabChange = (tabKey) => {
