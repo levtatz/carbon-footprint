@@ -34,6 +34,7 @@ export const HousingForm = ({ addToChart, setEmissions }) => {
 
   return (
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+      <h3>Electricity</h3>
       <Form.Item
         name="state"
         label="State"
